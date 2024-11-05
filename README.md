@@ -1,8 +1,19 @@
-# React + Vite
+# Star Wars Starships
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an interactive web application that displays various starships from the Star Wars universe. Users can search for starships and view detailed information about each starship by clicking on it.
+This project was developed as an assignment for the Patika Front End Bootcamp, week 12.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Fetches starship data from the Star Wars API (SWAPI).
+- Search functionality to filter starships by name.
+- Responsive design with a modern UI using Tailwind CSS.
+- Modal interface to display detailed information about selected starships.
+
+## Live Demo
+
+You can see a live demo of the project at the following link:
+
+[Live Demo](https://sw-starships-react.pages.dev/)
+
+![Screen Recording](screen-recording.gif)
