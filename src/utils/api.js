@@ -1,9 +1,9 @@
-export const fetchStarships = async () => {
+export const fetchStarships = async ({ signal, fetchImpl = fetch } = {}) => {
   const starships = [];
   let url = "https://swapi.dev/api/starships/";
 
   while (url) {
-    const response = await fetch(url);
+    const response = await fetchImpl(url, { signal });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
