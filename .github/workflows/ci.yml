@@ -36,9 +36,11 @@ jobs:
       - name: Lint source
         run: npm run lint
 
+      - name: Test starship interactions
+        run: npm test
+
       - name: Build production site
         run: npm run build
 
       - name: Verify build entrypoint
         run: test -s dist/index.html
-

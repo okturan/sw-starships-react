@@ -9,6 +9,19 @@ This project was developed as an assignment for the Patika Front End Bootcamp, w
 - Search functionality to filter starships by name.
 - Responsive design with a modern UI using Tailwind CSS.
 - Modal interface to display detailed information about selected starships.
+- Keyboard-accessible result cards and starship detail dialogs.
+- Explicit loading, retryable error, and no-match states.
+
+## Verified behavior
+
+The test suite mocks SWAPI at the application boundary, so CI proves loading, failed-request retry, name filtering, no-match feedback, and keyboard opening/closing of the detail dialog without relying on the public API's uptime.
+
+```sh
+npm ci
+npm test
+npm run lint
+npm run build
+```
 
 ## Live Demo
 
