@@ -51,17 +51,17 @@ describe("Star Wars Starships", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.getByRole("status").textContent).toContain("Loading starships");
+    expect(screen.getByRole("status").textContent).toContain("Contacting the archive");
     expect(await screen.findByRole("button", { name: "View details for Millennium Falcon" })).toBeTruthy();
 
-    const search = screen.getByRole("textbox", { name: "Search starships by name" });
+    const search = screen.getByRole("searchbox", { name: "Search starships by name" });
     await user.type(search, "x-wing");
     expect(screen.queryByRole("button", { name: "View details for Millennium Falcon" })).toBeNull();
     expect(screen.getByRole("button", { name: "View details for X-wing" })).toBeTruthy();
 
     await user.clear(search);
     await user.type(search, "Death Star");
-    expect(screen.getByRole("status").textContent).toContain("No starships match “Death Star”");
+    expect(screen.getByRole("heading", { name: "No vessels match “Death Star”" })).toBeTruthy();
   });
 
   it("opens the detail dialog from the keyboard and closes it with Escape", async () => {
@@ -77,6 +77,9 @@ describe("Star Wars Starships", () => {
     expect(dialog).toBeTruthy();
     expect(screen.getByRole("button", { name: "Close starship details" })).toBe(document.activeElement);
 
+    await user.keyboard("{Tab}");
+    expect(screen.getByRole("button", { name: "Close starship details" })).toBe(document.activeElement);
+
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).toBeNull();
     await waitFor(() => expect(falcon).toBe(document.activeElement));
@@ -88,7 +91,7 @@ describe("Star Wars Starships", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect((await screen.findByRole("alert")).textContent).toContain("Failed to load starships");
+    expect((await screen.findByRole("alert")).textContent).toContain("could not be loaded");
     await user.click(screen.getByRole("button", { name: "Try again" }));
     expect(await screen.findByRole("button", { name: "View details for X-wing" })).toBeTruthy();
     expect(fetchStarships).toHaveBeenCalledTimes(2);

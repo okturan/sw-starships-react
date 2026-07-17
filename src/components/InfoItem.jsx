@@ -1,10 +1,11 @@
 const InfoItem = ({ icon, label, value }) => {
   return (
-    <div className="flex justify-between border-b border-slate-400">
-      <span className="text-xl text-nowrap self-center">
-        {icon} <strong>{label}:</strong>
+    <div className="info-item">
+      <span>
+        {icon && <span className="info-icon" aria-hidden="true">{icon}</span>}
+        <strong>{label}</strong>
       </span>
-      <span className="text-lg text-end">{value}</span>
+      <span>{value}</span>
     </div>
   );
 };
