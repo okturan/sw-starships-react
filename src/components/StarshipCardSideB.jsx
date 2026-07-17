@@ -7,11 +7,20 @@ const StarshipCardSideB = ({ starship, onClose }) => {
 
   useEffect(() => {
     closeButtonRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();
+      if (event.key === "Tab") {
+        event.preventDefault();
+        closeButtonRef.current?.focus();
+      }
     };
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [onClose]);
 
   const handleOverlayClick = (e) => {
@@ -19,35 +28,37 @@ const StarshipCardSideB = ({ starship, onClose }) => {
   };
 
   const infoData = [
-    { icon: "🚀", label: "Max atmospheric speed", value: `${starship.max_atmosphering_speed} km/h` },
-    { icon: "👥", label: "Crew", value: starship.crew },
-    { icon: "🧑‍🤝‍🧑", label: "Passengers", value: starship.passengers },
-    { icon: "📦", label: "Cargo Capacity", value: `${starship.cargo_capacity} kg` },
-    { icon: "🍽️", label: "Consumables", value: starship.consumables },
-    { icon: "⚡", label: "Hyperdrive Rating", value: starship.hyperdrive_rating },
-    { icon: "📡", label: "MGLT", value: starship.MGLT },
+    { label: "Max atmospheric speed", value: `${starship.max_atmosphering_speed} km/h` },
+    { label: "Crew", value: starship.crew },
+    { label: "Passengers", value: starship.passengers },
+    { label: "Cargo capacity", value: `${starship.cargo_capacity} kg` },
+    { label: "Consumables", value: starship.consumables },
+    { label: "Hyperdrive rating", value: starship.hyperdrive_rating },
+    { label: "MGLT", value: starship.MGLT },
   ];
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="dialog-backdrop"
       onClick={handleOverlayClick}>
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="starship-dialog-title"
-        className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-xl rounded-xl p-8 max-w-lg w-full relative">
+        className="dialog-panel">
+        <p className="eyebrow">Technical record</p>
         <button
           ref={closeButtonRef}
           type="button"
-          className="absolute top-4 right-4 text-white hover:text-yellow-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-300 text-2xl"
+          className="dialog-close"
           onClick={onClose}
           aria-label="Close starship details">
           &times;
         </button>
 
-        <h2 id="starship-dialog-title" className="text-3xl font-bold mb-6 text-center">{starship.name}</h2>
-        <div className="space-y-4">
+        <h2 id="starship-dialog-title">{starship.name}</h2>
+        <p className="dialog-model">{starship.model}</p>
+        <div className="dialog-data">
           {infoData.map((item) => (
             <InfoItem key={item.label} icon={item.icon} label={item.label} value={item.value} />
           ))}
